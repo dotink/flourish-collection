@@ -46,7 +46,7 @@
 		 */
 		public function get($name, $default = NULL)
 		{
-			if (isset($this->data[$name])) {
+			if (array_key_exists($name, $this->data)) {
 				return $this->data[$name];
 			}
 
@@ -87,7 +87,10 @@
 		public function set($name, $value = NULL)
 		{
 			if ($value === NULL) {
-				if (isset($this->data[$name])) {
+				if (is_array($params = $name)) {
+					$this->data = array_merge($this->data, $params);
+
+				} elseif (array_key_exists($name, $this->data)) {
 					unset($this->data[$name]);
 				}
 
