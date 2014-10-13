@@ -5,7 +5,7 @@
 		/**
 		 *
 		 */
-		private $data;
+		protected $data;
 
 
 		/**
@@ -51,6 +51,14 @@
 			return $default;
 		}
 
+
+		/**
+		 *
+		 */
+		public function getAll()
+		{
+			return $this->data;
+		}
 
 
 		/**
