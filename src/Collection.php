@@ -1,5 +1,7 @@
 <?php namespace Dotink\Flourish
 {
+	use Iterator;
+
 	class Collection implements Iterator
 	{
 		/**
