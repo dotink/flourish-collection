@@ -44,22 +44,17 @@
 		 * @param mixed $default A default value if the item is not found
 		 * @return mixed The value set for the item or the default if not found
 		 */
-		public function get($name, $default = NULL)
+		public function get($name = NULL, $default = NULL)
 		{
+			if ($name === NULL) {
+				return $this->data;
+			}
+
 			if (array_key_exists($name, $this->data)) {
 				return $this->data[$name];
 			}
 
 			return $default;
-		}
-
-
-		/**
-		 *
-		 */
-		public function getAll()
-		{
-			return $this->data;
 		}
 
 
@@ -109,4 +104,3 @@
 		}
 	}
 }
-
