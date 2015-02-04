@@ -50,11 +50,19 @@
 				return $this->data;
 			}
 
-			if (array_key_exists($name, $this->data)) {
+			if ($this->has($name)) {
 				return $this->data[$name];
 			}
 
 			return $default;
+		}
+
+
+		/**
+		 *
+		 */
+		public function has($name) {
+			return array_key_exists($name, $this->data);
 		}
 
 
