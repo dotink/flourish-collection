@@ -50,6 +50,16 @@
 				return $this->data;
 			}
 
+			if (is_array($name)) {
+				$data = array();
+
+				foreach ($name as $key) {
+					$data[$key] = $this->get($key);
+				}
+
+				return $data;
+			}
+
 			if ($this->has($name)) {
 				return $this->data[$name];
 			}
