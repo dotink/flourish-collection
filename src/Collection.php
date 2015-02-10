@@ -2,16 +2,33 @@
 {
 	use Iterator;
 
+	/**
+	 * An extremely simple collection which is meant to be extended
+	 *
+	 * @copyright Copyright (c) 2015, Matthew J. Sahagian
+	 * @author Matthew J. Sahagian [mjs] <msahagian@dotink.org>
+	 *
+	 * @license Please reference the LICENSE.md file at the root of this distribution
+	 *
+	 * @package Affinity
+	 */
 	class Collection implements Iterator
 	{
 		/**
+		 * The data in the collection
 		 *
+		 * @access protected
+		 * @var array
 		 */
 		protected $data;
 
 
 		/**
+		 * Create a new collection
 		 *
+		 * @access public
+		 * @param array $data The initial data for the collection
+		 * @return void
 		 */
 		public function __construct($data = array())
 		{
@@ -20,7 +37,10 @@
 
 
 		/**
+		 * Rewind the collection to the first element
 		 *
+		 * @access public
+		 * @return mixed The first element in the collection
 		 */
 		public function rewind()
 		{
@@ -29,7 +49,10 @@
 
 
 		/**
+		 * Get the current element
 		 *
+		 * @access public
+		 * @return mixed The current element in the collection
 		 */
 		public function current()
 		{
@@ -38,9 +61,16 @@
 
 
 		/**
-		 * Get a value from the collection
+		 * Get values from the collection
 		 *
-		 * @param string $name The name of the item
+		 * - If no name is passed, all data is returned
+		 * - If an array is passed, only the data whose keys match values in the array is returned
+		 * - If a string name is passed, the value for the key is returned, otherwise `$default`
+		 *
+		 * @example collection/get/with_null.php
+		 * @example collection/get/with_string.php
+		 * @example collection/get/with_array.php
+		 * @param string $name The name of the element
 		 * @param mixed $default A default value if the item is not found
 		 * @return mixed The value set for the item or the default if not found
 		 */
@@ -54,7 +84,7 @@
 				$data = array();
 
 				foreach ($name as $key) {
-					$data[$key] = $this->get($key);
+					$data[$key] = $this->get($key, $default);
 				}
 
 				return $data;
@@ -69,7 +99,11 @@
 
 
 		/**
+		 * Check to see if a value is set, explicitly
 		 *
+		 * @access public
+		 * @param string $name The name of the element
+		 * @return boolean TRUE if a value for the name is set, FALSE otherwise
 		 */
 		public function has($name) {
 			return array_key_exists($name, $this->data);
@@ -77,7 +111,10 @@
 
 
 		/**
+		 * Get the current element's name
 		 *
+		 * @access public
+		 * @return string The name of the current element
 		 */
 		public function key()
 		{
@@ -86,7 +123,10 @@
 
 
 		/**
+		 * Get and move to the next element
 		 *
+		 * @access public
+		 * @return mixed The next elelment's value
 		 */
 		public function next()
 		{
@@ -95,12 +135,21 @@
 
 
 		/**
+		 * Set the value of elements in the collection
 		 *
+		 * - If only an array is passed, the data is merged into the collection non-recursively
+		 * - If a name and value are passed but the value is NULL, the element is unset
+		 * - If a name and non-NULL value are passed, the element by that name is given the value
+		 *
+		 * @access public
+		 * @param string $name The name of the element in the collection
+		 * @param mixed $value The value for the element in the collection
+		 * @return void
 		 */
 		public function set($name, $value = NULL)
 		{
 			if ($value === NULL) {
-				if (is_array($params = $name)) {
+				if (is_array($params = func_get_arg(0))) {
 					$this->data = array_merge($this->data, $params);
 
 				} elseif (array_key_exists($name, $this->data)) {
@@ -114,7 +163,12 @@
 
 
 		/**
+		 * Check if the current element is valid
 		 *
+		 * This will look for a NULL key, which signifies the end of the element collection
+		 *
+		 * @access public
+		 * @return boolean TRUE if the current element is valid, FALSE otherwise
 		 */
 		public function valid()
 		{
