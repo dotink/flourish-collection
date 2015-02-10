@@ -10,7 +10,7 @@
 	 *
 	 * @license Please reference the LICENSE.md file at the root of this distribution
 	 *
-	 * @package Affinity
+	 * @package Flourish
 	 */
 	class Collection implements Iterator
 	{
