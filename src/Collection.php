@@ -203,8 +203,6 @@
 
 				unset($this->cache[$key]);
 
-				var_dump($this->cache);
-
 				$this->data = array_merge_recursive($this->data, $data);
 			}
 		}
