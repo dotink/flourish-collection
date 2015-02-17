@@ -26,7 +26,8 @@
 		/**
 		 * A simple dereference cache
 		 *
-		 *
+		 * @access protected
+		 * @var array
 		 */
 		protected $cache = array();
 
