@@ -24,6 +24,14 @@
 
 
 		/**
+		 * A simple dereference cache
+		 *
+		 *
+		 */
+		protected $cache = array();
+
+
+		/**
 		 * Create a new collection
 		 *
 		 * @access public
@@ -91,7 +99,7 @@
 			}
 
 			if ($this->has($name)) {
-				return $this->data[$name];
+				return $this->cache[$name];
 			}
 
 			return $default;
@@ -106,7 +114,30 @@
 		 * @return boolean TRUE if a value for the name is set, FALSE otherwise
 		 */
 		public function has($name) {
-			return array_key_exists($name, $this->data);
+
+			if (array_key_exists($name, $this->cache)) {
+				return TRUE;
+			}
+
+			try {
+				$parts = explode('.', $name);
+				$head  = &$this->data;
+
+				foreach ($parts as $part) {
+					if (isset($head[$part])) {
+						$head = &$head[$part];
+					} else {
+						throw new NotFoundException();
+					}
+				}
+
+			} catch (NotFoundException $e) {
+				return FALSE;
+			}
+
+			$this->cache[$name] = &$head;
+
+			return TRUE;
 		}
 
 
@@ -157,7 +188,23 @@
 				}
 
 			} else {
-				$this->data[$name] = $value;
+				$parts = explode('.', $name);
+				$data  = $value;
+
+				foreach (array_reverse($parts) as $part) {
+					$data = [$part => $data];
+				}
+
+
+				for ($key = array_shift($parts); count($parts); $key .= '.' . array_shift($parts)) {
+					unset($this->cache[$key]);
+				}
+
+				unset($this->cache[$key]);
+
+				var_dump($this->cache);
+
+				$this->data = array_merge_recursive($this->data, $data);
 			}
 		}
 
