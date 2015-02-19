@@ -180,30 +180,43 @@
 		 */
 		public function set($name, $value = NULL)
 		{
-			if ($value === NULL) {
-				if (is_array($params = func_get_arg(0))) {
-					$this->data = array_merge($this->data, $params);
-
-				} elseif (array_key_exists($name, $this->data)) {
-					unset($this->data[$name]);
+			if (is_array($values = func_get_arg(0))) {
+				foreach ($values as $name => $value) {
+					$this->set($name, $value);
 				}
 
 			} else {
 				$parts = explode('.', $name);
-				$data  = $value;
 
-				foreach (array_reverse($parts) as $part) {
-					$data = [$part => $data];
+				if ($value === NULL) {
+					$end  = array_pop($parts);
+					$head = &$this->data;
+
+					foreach ($parts as $part) {
+						$head = &$head[$part];
+					}
+
+					unset($head[$end]);
+
+					$parts[] = $end;
+
+				} else {
+					foreach (array_reverse($parts) as $part) {
+						$value = [$part => $value];
+					}
+
+					$this->data = array_merge_recursive($this->data, $value);
 				}
 
+				//
+				// Clear the cache
+				//
 
 				for ($key = array_shift($parts); count($parts); $key .= '.' . array_shift($parts)) {
 					unset($this->cache[$key]);
 				}
 
 				unset($this->cache[$key]);
-
-				$this->data = array_merge_recursive($this->data, $data);
 			}
 		}
 
