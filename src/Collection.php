@@ -205,7 +205,7 @@
 						$value = [$part => $value];
 					}
 
-					$this->data = array_merge_recursive($this->data, $value);
+					$this->data = array_replace_recursive($this->data, $value);
 				}
 
 				//
