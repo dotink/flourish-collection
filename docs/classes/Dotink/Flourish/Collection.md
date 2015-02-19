@@ -56,6 +56,10 @@ _Please reference the LICENSE.md file at the root of this distribution_
 
 The data in the collection
 
+#### <span style="color:#6a6e3d;">$cache</span>
+
+A simple dereference cache
+
 
 
 
