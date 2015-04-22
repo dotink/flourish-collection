@@ -68,15 +68,11 @@ It is possible to use compound keys to access data (both getting and setting) in
 ### Set Nested Data
 
 ```php
-$collection->set('foo.bar', 'foobar');
+$collection->set('foo.bar', 'foobar'); // $collection->get('foo') returns ['bar' => 'foobar']
 ```
-
-This would result in `$collection->get('foo')` returning `['bar' => 'foobar']`.
 
 ### Get Nested Data
 
 ```php
-$collection->get('foo.bar');
+$collection->get('foo.bar'); // return 'foobar'
 ```
-
-Will return `'foobar'`.
