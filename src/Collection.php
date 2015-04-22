@@ -193,7 +193,11 @@
 					$head = &$this->data;
 
 					foreach ($parts as $part) {
-						$head = &$head[$part];
+						if (isset($head[$part])) {
+							$head = &$head[$part];
+						} else {
+							return;
+						}
 					}
 
 					unset($head[$end]);
@@ -216,7 +220,7 @@
 					unset($this->cache[$key]);
 				}
 
-				unset($this->cache[$key]);
+				unset($this->cache[$name]);
 			}
 		}
 
@@ -231,7 +235,7 @@
 		 */
 		public function valid()
 		{
-			return key($this->data) !== null;
+			return key($this->data) !== NULL;
 		}
 	}
 }

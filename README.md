@@ -1,9 +1,8 @@
 A Super Simple Collection Class
 =======
 
-This is a super simple collection class which is designed to be extended.
-It is mostely useful where you need selective collection querying or
-default values with ease.
+This is a super simple collection class which is designed to be extended. It is mostely useful where
+you need selective collection querying or default values with ease.
 
 ## Basic Usage
 
@@ -61,3 +60,23 @@ foreach ($collection as $letter => $fruit_or_vegetable) {
 	);
 }
 ```
+
+## Compound Keys
+
+It is possible to use compound keys to access data (both getting and setting) in nested arrays.
+
+### Set Nested Data
+
+```php
+$collection->set('foo.bar', 'foobar');
+```
+
+This would result in `$collection->get('foo')` returning `['bar' => 'foobar']`.
+
+### Get Nested Data
+
+```php
+$collection->get('foo.bar');
+```
+
+Will return `'foobar'`.
