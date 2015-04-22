@@ -1,6 +1,8 @@
 A Super Simple Collection Class
 =======
 
+[![Build Status](https://travis-ci.org/dotink/flourish-collection.svg?branch=master)](https://travis-ci.org/dotink/flourish-collection)
+
 This is a super simple collection class which is designed to be extended. It is mostely useful where
 you need selective collection querying or default values with ease.
 
