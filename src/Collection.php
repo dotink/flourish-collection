@@ -169,7 +169,7 @@
 		/**
 		 * Set the value of elements in the collection
 		 *
-		 * - If only an array is passed, the data is merged into the collection non-recursively
+		 * - If only an array is passed, the data is merged into the collection recursively
 		 * - If a name and value are passed but the value is NULL, the element is unset
 		 * - If a name and non-NULL value are passed, the element by that name is given the value
 		 *
