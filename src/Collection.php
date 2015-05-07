@@ -125,8 +125,12 @@
 				$head  = &$this->data;
 
 				foreach ($parts as $part) {
-					if (isset($head[$part])) {
+					if (is_array($head) && isset($head[$part])) {
 						$head = &$head[$part];
+
+					} elseif (is_object($head) && isset($head->$part)) {
+						$head = &$head->$part;
+
 					} else {
 						throw new NotFoundException();
 					}
