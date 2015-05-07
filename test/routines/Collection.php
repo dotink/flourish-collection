@@ -92,19 +92,39 @@
 
 			'Compound Keys' => function($data, $shared) {
 				$collection = new Collection([
-					'foo' => ['bar' => 'foobar']
+					'foo' => ['bar' => 'foobar'],
+					'bar' => (object) ['foo' => 'foobar']
 				]);
-
-				$collection->set('bar.foo', 'test');
 
 				assert('Dotink\Flourish\Collection::get')
 					-> using($collection)
+
 					-> with('foo.bar')
 					-> equals('foobar')
 
+					-> with('foo')
+					-> equals(['bar' => 'foobar'])
+
+					-> with('bar.foo')
+					-> equals('foobar')
+
 					-> with('bar')
-					-> equals(['foo' => 'test'])
+					-> equals((object) ['foo' => 'foobar'])
 				;
+
+				$collection->set('bar.foo', 'barfoo');
+				$collection->set('foo.bar', 'barfoo');
+
+				assert('Dotink\Flourish\Collection::get')
+					-> using($collection)
+
+					-> with('foo.bar')
+					-> equals('barfoo')
+
+					-> with('bar.foo')
+					-> equals('barfoo')
+				;
+
 			},
 
 			'Implicit Unset' => function($data, $shared) {
